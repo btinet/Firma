@@ -24,6 +24,10 @@ public abstract class AbstractMitarbeiter {
 
     // Getter & Setter
 
+    public String getFullName() {
+        return String.format("%s %s",getVorname(),getName());
+    }
+
     public String getName() {
         return name;
     }

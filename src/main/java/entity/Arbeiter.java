@@ -21,17 +21,21 @@ public class Arbeiter extends AbstractMitarbeiter {
         super(vorname, name, gehalt);
     }
 
-    // Methoden
+    // Methods
 
-    public double getLohn() {
-        if(getStunden() != 0) {
-            return getStundenlohn() * getStunden();
-        } else {
-            System.out.println(getVorname() + " hat noch nicht gearbeitet!");
-            return 0;
-        }
-
+    public void setGehalt() {
+        super.setGehalt(getStunden()*getStundenlohn());
     }
+
+    public void updateGehalt(double stunden) {
+        super.setGehalt(stunden*getStundenlohn()+getGehalt());
+    }
+
+    public void addStunden(double stunden) {
+        this.stunden += stunden;
+        updateGehalt(stunden);
+    }
+
 
     // Getter & Setter
 
@@ -41,6 +45,7 @@ public class Arbeiter extends AbstractMitarbeiter {
 
     public void setStunden(double stunden) {
         this.stunden = stunden;
+        updateGehalt(stunden);
     }
 
     public double getStundenlohn() {

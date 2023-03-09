@@ -9,7 +9,7 @@ public class Main {
         Angestellter officeOlaf = new Angestellter("Olaf","Office",3700);
 
         // Arbeiter erzeugen
-        Arbeiter baustellenBernd = new Arbeiter("Bernd","baustelle",1200);
+        Arbeiter baustellenBernd = new Arbeiter("Bernd","Baustelle",1200);
 
         // Provisionen verteilen
         officeOlaf.setProvision(300);
@@ -17,13 +17,18 @@ public class Main {
         // Stundenlohn vereinbaren
         baustellenBernd.setStundenlohn(5);
 
-        System.out.println("Lohn: " + baustellenBernd.getLohn());
+        System.out.println("Lohn: " + baustellenBernd.getGehalt());
 
         // Arbeitszeit erfassen
-        System.out.println("Arbeiter erfasst Arbeitszeit");
-        baustellenBernd.setStunden(40);
+        int arbeitszeit = 40;
+        String output = String.format("Arbeiter %s arbeitete %s Stunden.",baustellenBernd.getFullName(),arbeitszeit);
+        System.out.println(output);
+        baustellenBernd.setStunden(arbeitszeit);
+        System.out.println("Lohn: " + baustellenBernd.getGehalt());
 
-        System.out.println("Lohn: " + baustellenBernd.getLohn());
+        baustellenBernd.addStunden(10);
+        System.out.println(baustellenBernd.getStunden());
+        System.out.println("Lohn: " + baustellenBernd.getGehalt());
 
     }
 
