@@ -44,8 +44,22 @@ public class Arbeiter extends AbstractMitarbeiter {
     }
 
     public void setStunden(double stunden) {
-        this.stunden = stunden;
-        updateGehalt(stunden);
+        if(getGehalt() != 0)
+        {
+            System.out.printf("Um das Gehalt über %s von %s zu überschreiben, bitte zweiten Parameter auf 'true' setzen!%n",getGehalt(),getFullName());
+        } else {
+            this.stunden = stunden;
+            setGehalt();
+        }
+    }
+
+    public void setStunden(double stunden,boolean forceOverwrite) {
+        if(getGehalt() != 0 && !forceOverwrite) {
+            System.err.printf("Um das Gehalt über %s von %s zu überschreiben, bitte zweiten Parameter auf 'true' setzen!",getGehalt(),getFullName());
+        } else {
+            this.stunden = stunden;
+            setGehalt();
+        }
     }
 
     public double getStundenlohn() {

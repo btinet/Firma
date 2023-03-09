@@ -24,10 +24,15 @@ public class Main {
         String output = String.format("Arbeiter %s arbeitete %s Stunden.",baustellenBernd.getFullName(),arbeitszeit);
         System.out.println(output);
         baustellenBernd.setStunden(arbeitszeit);
+        baustellenBernd.setGehalt(0);
+        baustellenBernd.setStunden(20);
+
         System.out.println("Lohn: " + baustellenBernd.getGehalt());
 
         baustellenBernd.addStunden(10);
         System.out.println(baustellenBernd.getStunden());
+        System.out.println("Lohn: " + baustellenBernd.getGehalt());
+        baustellenBernd.setStunden(20,true);
         System.out.println("Lohn: " + baustellenBernd.getGehalt());
 
     }
