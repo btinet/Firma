@@ -19,6 +19,8 @@ public class DemoFirma {
     private FirmaDemoComponent demo;
     private GraphicsDevice device;
 
+    private CardLayout cardLayout;
+
 
     // Constructor
     public DemoFirma() {
@@ -39,6 +41,10 @@ public class DemoFirma {
         }
 
         frame = new JFrame();
+
+        this.cardLayout = new CardLayout();
+        this.frame.setLayout(this.cardLayout);
+
         frame.add(demo);
 
         frame.setTitle("Demo Firma");
@@ -90,6 +96,10 @@ public class DemoFirma {
         frame.setCursor(Cursor.getDefaultCursor());
         frame.setVisible(true);
         frame.repaint();
+    }
+
+    public CardLayout getCardLayout() {
+        return cardLayout;
     }
 
     // main class
