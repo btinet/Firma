@@ -39,7 +39,7 @@ public class DemoFirma {
         }
 
         frame = new JFrame();
-        // add JPanel to Frame: frame.add(demo);
+        frame.add(demo);
 
         frame.setTitle("Demo Firma");
         frame.setResizable(false);
