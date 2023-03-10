@@ -1,3 +1,5 @@
+import com.formdev.flatlaf.FlatLightLaf;
+import com.formdev.flatlaf.intellijthemes.*;
 import ui.FirmaDemoComponent;
 
 import javax.swing.*;
@@ -28,6 +30,13 @@ public class DemoFirma {
 
     // Methoden
     public void setupWindow() {
+        try {
+            UIManager.setLookAndFeel( new FlatLightLaf());
+            FlatVuesionIJTheme.setup();
+            // FlatGitHubDarkContrastIJTheme.setup();
+        } catch (UnsupportedLookAndFeelException ex) {
+            ex.printStackTrace();
+        }
 
         frame = new JFrame();
         // add JPanel to Frame: frame.add(demo);
