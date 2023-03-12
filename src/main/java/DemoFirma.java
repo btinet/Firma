@@ -1,3 +1,4 @@
+
 import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.intellijthemes.*;
 import ui.FirmaDemoComponent;
@@ -34,18 +35,16 @@ public class DemoFirma {
     public void setupWindow() {
         try {
             UIManager.setLookAndFeel( new FlatLightLaf());
-            FlatVuesionIJTheme.setup();
-            // FlatGitHubDarkContrastIJTheme.setup();
+            // FlatVuesionIJTheme.setup();
+            FlatCyanLightIJTheme.setup();
         } catch (UnsupportedLookAndFeelException ex) {
             ex.printStackTrace();
         }
 
         frame = new JFrame();
-
-        this.cardLayout = new CardLayout();
-        this.frame.setLayout(this.cardLayout);
-
         frame.add(demo);
+
+        SwingUtilities.updateComponentTreeUI(frame);
 
         frame.setTitle("Demo Firma");
         frame.setResizable(false);
