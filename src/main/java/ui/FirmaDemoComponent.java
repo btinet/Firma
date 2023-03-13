@@ -1,7 +1,10 @@
 package ui;
 
 import core.AbstractMitarbeiter;
+import core.Currency;
 import entity.Angestellter;
+import entity.Euro;
+import entity.Forint;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -37,6 +40,13 @@ public class FirmaDemoComponent extends JPanel implements ActionListener {
         this.add(button);
         this.add(button2);
         this.add(textField);
+
+        Euro euro = new Euro(59900);
+        Forint forint = new Forint(59900);
+
+        System.out.printf("In Euro sind es %s%n",euro.getMoney());
+        System.out.printf("In Forint sind es aber %s%n",forint.getMoney());
+
     }
 
     // Methoden
