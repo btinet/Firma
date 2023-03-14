@@ -1,12 +1,14 @@
 package core;
 
+import entity.Money;
+
 public abstract class AbstractMitarbeiter {
 
     // Attribute
 
     protected String name;
     protected String vorname;
-    protected double gehalt;
+    protected Money gehalt;
 
     // Constructor
 
@@ -14,7 +16,7 @@ public abstract class AbstractMitarbeiter {
             (
                     String vorname,
                     String name,
-                    double gehalt
+                    Money gehalt
             )
     {
         setName(name);
@@ -44,11 +46,11 @@ public abstract class AbstractMitarbeiter {
         this.vorname = vorname;
     }
 
-    public double getGehalt() {
+    public Money getGehalt() {
         return gehalt;
     }
 
-    public void setGehalt(double gehalt) {
+    public void setGehalt(Money gehalt) {
         this.gehalt = gehalt;
     }
 }

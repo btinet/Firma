@@ -7,7 +7,7 @@ public class Arbeiter extends AbstractMitarbeiter {
     // Attribute
 
     protected double stunden = 0;
-    protected double stundenlohn = 0;
+    protected Money stundenlohn;
 
     // Constructor
 
@@ -15,23 +15,25 @@ public class Arbeiter extends AbstractMitarbeiter {
             (
                     String vorname,
                     String name,
-                    double gehalt
+                    Money gehalt,
+                    Money stundenlohn
             )
     {
         super(vorname, name, gehalt);
+        this.stundenlohn = stundenlohn;
     }
 
     // Methods
 
     public void setGehalt() {
-        super.setGehalt(getStunden()*getStundenlohn());
+        this.getGehalt().setAmount((int) (getStunden()*getStundenlohn().getAmount()));
     }
 
-    public void updateGehalt(double stunden) {
-        super.setGehalt(stunden*getStundenlohn()+getGehalt());
+    public void updateGehalt(int stunden) {
+        this.getGehalt().setAmount(stunden*getStundenlohn().getAmount()+getGehalt().getAmount());
     }
 
-    public void addStunden(double stunden) {
+    public void addStunden(int stunden) {
         this.stunden += stunden;
         updateGehalt(stunden);
     }
@@ -44,7 +46,7 @@ public class Arbeiter extends AbstractMitarbeiter {
     }
 
     public void setStunden(double stunden) {
-        if(getGehalt() != 0)
+        if(getGehalt().getAmount() != 0)
         {
             System.out.printf("Um das Gehalt über %s von %s zu überschreiben, bitte zweiten Parameter auf 'true' setzen!%n",getGehalt(),getFullName());
         } else {
@@ -54,7 +56,7 @@ public class Arbeiter extends AbstractMitarbeiter {
     }
 
     public void setStunden(double stunden,boolean forceOverwrite) {
-        if(getGehalt() != 0 && !forceOverwrite) {
+        if(getGehalt().getAmount() != 0 && !forceOverwrite) {
             System.err.printf("Um das Gehalt über %s von %s zu überschreiben, bitte zweiten Parameter auf 'true' setzen!",getGehalt(),getFullName());
         } else {
             this.stunden = stunden;
@@ -62,11 +64,11 @@ public class Arbeiter extends AbstractMitarbeiter {
         }
     }
 
-    public double getStundenlohn() {
+    public Money getStundenlohn() {
         return stundenlohn;
     }
 
-    public void setStundenlohn(double stundenlohn) {
-        this.stundenlohn = stundenlohn;
+    public void setStundenlohn(Integer stundenlohn) {
+        this.stundenlohn.setAmount(stundenlohn);
     }
 }

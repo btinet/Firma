@@ -12,8 +12,25 @@ public abstract class Money extends Currency {
         this.amount = amount;
     }
 
-    public String getMoney() {
-        return country.getMoney(this.amount);
+    public String getCurrency() {
+        return country.getCurrency(this.amount);
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public double getRate() {
+        return this.country.getCurrencyRate();
+    }
+
+    public Integer changeMoneyTo(Money newCurrency) {
+        double result = this.getRate() * this.getAmount() / newCurrency.getRate();
+        return Math.toIntExact(Math.round(result));
     }
 
 }

@@ -4,19 +4,22 @@ import java.text.DecimalFormat;
 
 public enum Country {
 
-    GERMANY ("Euro","EUR",true),
-    HUNGARY ("Forint","HUF", false),
-    AUSTRIA ("Euro","EUR",true),
-    BRITAIN ("Pound Sterling","GPB",true);
+    GERMANY ("Euro","EUR",true,1.19),
+    HUNGARY ("Forint","HUF", false, 0.89),
+    AUSTRIA ("Euro","EUR",true,0.9),
+    BRITAIN ("Pound Sterling","GPB",true,1);
 
     private final String name;
     private final String abbr;
     private final boolean isFloat;
 
-    Country(String currencyName, String currencyAbbreviation, boolean isFloat) {
+    private final double currencyRate;
+
+    Country(String currencyName, String currencyAbbreviation, boolean isFloat, double currencyRate) {
         this.name = currencyName;
         this.abbr = currencyAbbreviation;
         this.isFloat = isFloat;
+        this.currencyRate = currencyRate;
     }
 
     public String getAbbr() {
@@ -27,12 +30,20 @@ public enum Country {
         return name;
     }
 
-    public String getAmountAsString(Integer amount) {
-        Float money = amount.floatValue() / 100;
-        return new DecimalFormat("##.00").format(money);
+    public Boolean isFloat() {
+        return isFloat;
     }
 
-    public String getMoney(Integer amount) {
+    public double getCurrencyRate() {
+        return currencyRate;
+    }
+
+    private String getAmountAsString(Integer amount) {
+        Float money = amount.floatValue() / 100;
+        return new DecimalFormat("#0.00").format(money);
+    }
+
+    public String getCurrency(Integer amount) {
         if(isFloat) {
             return String.format("%s %s",getAmountAsString(amount),abbr);
         } else {

@@ -3,6 +3,7 @@ package ui;
 import core.AbstractMitarbeiter;
 import core.Currency;
 import entity.Angestellter;
+import entity.Arbeiter;
 import entity.Euro;
 import entity.Forint;
 
@@ -27,10 +28,15 @@ public class FirmaDemoComponent extends JPanel implements ActionListener {
 
         System.out.println("Komponente geladen.");
 
-        Angestellter olafOffice = new Angestellter("Olaf","Office",3750);
+        // instanziiere Mitarbeiter-Objekte
+        Angestellter olafOffice = new Angestellter("Olaf","Office",new Euro(375000));
+        Arbeiter bauBernd = new Arbeiter("Bernd","Bau",new Euro(125000),new Euro(500));
+
+        // füge Mitarbeiter der Objektliste hinzu (wichtig später für die UI)
         employeeObjects.add(olafOffice);
+        employeeObjects.add(bauBernd);
 
-
+        // Beginn: UI-Swing-Elemente
         JTextField textField = new JTextField(olafOffice.getFullName() + " ist ein super Angestellter");
         textFieldObjects.add(textField);
         JButton button = new JButton("Klick mich");
@@ -40,13 +46,23 @@ public class FirmaDemoComponent extends JPanel implements ActionListener {
         this.add(button);
         this.add(button2);
         this.add(textField);
+        // Ende: UI-Swing-Elemente
 
+
+        // Testweises Erzeugen von Währungsobjekten sowie deren Ausgabe auf der Konsole
         Euro euro = new Euro(59900);
         Forint forint = new Forint(59900);
+        System.out.printf("In Euro sind es %s%n",euro.getCurrency());
+        System.out.printf("In Forint sind es aber %s%n",forint.getCurrency());
 
-        System.out.printf("In Euro sind es %s%n",euro.getMoney());
-        System.out.printf("In Forint sind es aber %s%n",forint.getMoney());
+        forint.setAmount(euro.changeMoneyTo(forint));
 
+        System.out.printf("%s sind umgerechnet %s.%n",euro.getCurrency(),forint.getCurrency());
+
+        // Konsolenausgabe: Arbeiter mit Grundgehalt. Einmal ohne Stundenlohn, einmal + Lohn für 10 Stunden Arbet zu je 5,00 EUR.
+        System.out.printf("%s erhält aktuell %s, da er %s Stunden gearbeitet hat%n",bauBernd.getFullName(),bauBernd.getGehalt().getCurrency(),bauBernd.getStunden());
+        bauBernd.addStunden(10);
+        System.out.printf("%s erhält aktuell %s, da er %s Stunden gearbeitet hat%n",bauBernd.getFullName(),bauBernd.getGehalt().getCurrency(),bauBernd.getStunden());
     }
 
     // Methoden

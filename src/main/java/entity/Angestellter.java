@@ -14,7 +14,7 @@ public class Angestellter extends AbstractMitarbeiter {
             (
                     String vorname,
                     String name,
-                    double gehalt
+                    Money gehalt
             )
     {
         super(vorname, name, gehalt);
