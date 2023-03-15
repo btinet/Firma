@@ -2,10 +2,7 @@ package ui;
 
 import core.AbstractMitarbeiter;
 import core.Currency;
-import entity.Angestellter;
-import entity.Arbeiter;
-import entity.Euro;
-import entity.Forint;
+import entity.*;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -31,6 +28,7 @@ public class FirmaDemoComponent extends JPanel implements ActionListener {
         // instanziiere Mitarbeiter-Objekte
         Angestellter olafOffice = new Angestellter("Olaf","Office",new Euro(375000));
         Arbeiter bauBernd = new Arbeiter("Bernd","Bau",new Euro(125000),new Euro(500));
+        Arbeiter travelTao = new Arbeiter("Tao","Travel",new Yen(400000),new Yen(50000));
 
         // füge Mitarbeiter der Objektliste hinzu (wichtig später für die UI)
         employeeObjects.add(olafOffice);
@@ -55,7 +53,7 @@ public class FirmaDemoComponent extends JPanel implements ActionListener {
         System.out.printf("In Euro sind es %s%n",euro.getCurrency());
         System.out.printf("In Forint sind es aber %s%n",forint.getCurrency());
 
-        forint.setAmount(euro.changeMoneyTo(forint));
+        forint = (Forint) euro.changeMoneyTo(forint);
 
         System.out.printf("%s sind umgerechnet %s.%n",euro.getCurrency(),forint.getCurrency());
 
@@ -63,6 +61,8 @@ public class FirmaDemoComponent extends JPanel implements ActionListener {
         System.out.printf("%s erhält aktuell %s, da er %s Stunden gearbeitet hat%n",bauBernd.getFullName(),bauBernd.getGehalt().getCurrency(),bauBernd.getStunden());
         bauBernd.addStunden(10);
         System.out.printf("%s erhält aktuell %s, da er %s Stunden gearbeitet hat%n",bauBernd.getFullName(),bauBernd.getGehalt().getCurrency(),bauBernd.getStunden());
+        // Ausgabe des Gehaltes mit Umrechnung in andere Währung.
+        System.out.printf("%s erhält aktuell %s, da er %s Stunden gearbeitet hat%n",travelTao.getFullName(),travelTao.getGehalt().changeMoneyTo(new Euro()).getCurrency(),travelTao.getStunden());
     }
 
     // Methoden

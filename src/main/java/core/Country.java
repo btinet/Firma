@@ -7,7 +7,9 @@ public enum Country {
     GERMANY ("Euro","EUR",true,1.19),
     HUNGARY ("Forint","HUF", false, 0.89),
     AUSTRIA ("Euro","EUR",true,0.9),
-    BRITAIN ("Pound Sterling","GPB",true,1);
+    USA ("Dollar","USD",true,1),
+    JAPAN("Yen","YEN",false,0.5),
+    BRITAIN ("Pound Sterling","GPB",true,1.4);
 
     private final String name;
     private final String abbr;
