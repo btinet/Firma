@@ -6,10 +6,12 @@ public class Euro extends Money {
 
 
     public Euro () {
-        super(Country.GERMANY,0);
+        super(Country.GERMANY);
     }
 
-    public Euro(int amount) {
-        super(Country.GERMANY,amount);
+    public Euro (int amount) {
+        super(Country.GERMANY);
+        this.setAmount(amount);
     }
+
 }

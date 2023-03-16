@@ -5,11 +5,10 @@ import core.Currency;
 
 public abstract class Money extends Currency {
 
-    protected Integer amount;
+    protected Integer amount = 0;
 
-    public Money(Country country, int amount) {
+    public Money(Country country) {
         super(country);
-        this.amount = amount;
     }
 
     public String getCurrency() {
@@ -32,6 +31,10 @@ public abstract class Money extends Currency {
         double result = this.getRate() * this.getAmount() / newCurrency.getRate();
         newCurrency.setAmount(Math.toIntExact(Math.round(result)));
         return newCurrency;
+    }
+
+    public String toString() {
+        return getCurrency();
     }
 
 }

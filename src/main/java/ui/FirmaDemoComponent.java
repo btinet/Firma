@@ -5,6 +5,7 @@ import core.Currency;
 import entity.*;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -23,49 +24,103 @@ public class FirmaDemoComponent extends JPanel implements ActionListener {
 
     public FirmaDemoComponent() {
 
+        GridLayout experimentLayout = new GridLayout(0,4);
+        setLayout(experimentLayout);
+
         System.out.println("Komponente geladen.");
 
         // instanziiere Mitarbeiter-Objekte
         Angestellter olafOffice = new Angestellter("Olaf","Office",new Euro(375000));
         Arbeiter bauBernd = new Arbeiter("Bernd","Bau",new Euro(125000),new Euro(500));
-        Arbeiter travelTao = new Arbeiter("Tao","Travel",new Yen(400000),new Yen(50000));
+        Arbeiter travelTao = new Arbeiter("Tao","Travel",new Yen(10000),new Yen(5000));
+        travelTao.addStunden(10);
 
         // füge Mitarbeiter der Objektliste hinzu (wichtig später für die UI)
         employeeObjects.add(olafOffice);
         employeeObjects.add(bauBernd);
+        employeeObjects.add(travelTao);
 
         // Beginn: UI-Swing-Elemente
-        JTextField textField = new JTextField(olafOffice.getFullName() + " ist ein super Angestellter");
-        textFieldObjects.add(textField);
-        JButton button = new JButton("Klick mich");
-        JButton button2 = new JButton("Klick mich");
-        button.addActionListener(this::clickButton);
-        button2.addActionListener(this::clickButton);
-        this.add(button);
-        this.add(button2);
-        this.add(textField);
+
+
+        /*
+            JButton button = new JButton("Klick mich");
+            JButton button2 = new JButton("Klick mich");
+            button.addActionListener(this::clickButton);
+            button2.addActionListener(this::clickButton);
+            this.add(button);
+            this.add(button2);
+         */
+
+
         // Ende: UI-Swing-Elemente
 
 
         // Testweises Erzeugen von Währungsobjekten sowie deren Ausgabe auf der Konsole
-        Euro euro = new Euro(59900);
-        Forint forint = new Forint(59900);
-        System.out.printf("In Euro sind es %s%n",euro.getCurrency());
-        System.out.printf("In Forint sind es aber %s%n",forint.getCurrency());
+        Euro euro = new Euro();
+        euro.setAmount(59900);
+        Forint forint = new Forint();
 
-        forint = (Forint) euro.changeMoneyTo(forint);
+        System.out.printf("%s sind umgerechnet %s.%n",euro,euro.changeMoneyTo(forint));
 
-        System.out.printf("%s sind umgerechnet %s.%n",euro.getCurrency(),forint.getCurrency());
+        // Konsolenausgabe: Arbeiter mit Grundgehalt. Einmal ohne Stundenlohn, einmal + Lohn für 10 Stunden
+        // Arbeit zu je 5,00 EUR.
+        System.out.printf(
+                "%s erhält aktuell %s, da er %s Stunden gearbeitet hat%n",
+                bauBernd.getFullName(),bauBernd.getGehalt(),bauBernd.getStunden()
+        );
 
-        // Konsolenausgabe: Arbeiter mit Grundgehalt. Einmal ohne Stundenlohn, einmal + Lohn für 10 Stunden Arbet zu je 5,00 EUR.
-        System.out.printf("%s erhält aktuell %s, da er %s Stunden gearbeitet hat%n",bauBernd.getFullName(),bauBernd.getGehalt().getCurrency(),bauBernd.getStunden());
         bauBernd.addStunden(10);
-        System.out.printf("%s erhält aktuell %s, da er %s Stunden gearbeitet hat%n",bauBernd.getFullName(),bauBernd.getGehalt().getCurrency(),bauBernd.getStunden());
+
+        System.out.printf(
+                "%s erhält aktuell %s, da er %s Stunden gearbeitet hat%n",
+                bauBernd.getFullName(),bauBernd.getGehalt(),bauBernd.getStunden()
+        );
+
         // Ausgabe des Gehaltes mit Umrechnung in andere Währung.
-        System.out.printf("%s erhält aktuell %s, da er %s Stunden gearbeitet hat%n",travelTao.getFullName(),travelTao.getGehalt().changeMoneyTo(new Euro()).getCurrency(),travelTao.getStunden());
+        System.out.printf(
+                "%s erhält aktuell %s, da er %s Stunden gearbeitet hat%n",
+                travelTao.getFullName(),travelTao.getGehalt().changeMoneyTo(new Euro()),travelTao.getStunden()
+        );
+
+        addElementsToCanvas();
     }
 
     // Methoden
+
+    public void addElementsToCanvas () {
+
+        while (this.employeeObjects.iterator().hasNext()) {
+            System.out.println("Start der Liste");
+            AbstractMitarbeiter employee = this.employeeObjects.iterator().next();
+
+            if(employee instanceof Arbeiter) {
+                this.textFieldObjects.add(new JTextField(employee.getFullName()));
+                this.textFieldObjects.add(new JTextField(employee.getGehalt().toString()));
+                this.textFieldObjects.add(new JTextField(((Arbeiter) employee).getStundenlohn().toString()));
+                this.textFieldObjects.add(new JTextField(String.valueOf ( ((Arbeiter) employee).getStunden())));
+            }
+
+            if(employee instanceof Angestellter) {
+                this.textFieldObjects.add( new JTextField(employee.getFullName()));
+                this.textFieldObjects.add(new JTextField(employee.getGehalt().toString()));
+                this.textFieldObjects.add(new JTextField());
+                this.textFieldObjects.add(new JTextField());
+            }
+            this.employeeObjects.remove(employee);
+        }
+
+        this.add(new JLabel("Vollständiger Name"));
+        this.add(new JLabel("Stundenlohn"));
+        this.add(new JLabel("Arbeitsstunden"));
+        this.add(new JLabel("Gehalt gesamt"));
+
+        for (JTextField textField : this.textFieldObjects) {
+            this.add(textField);
+        }
+
+    }
+
     public void setSize(int w, int h) {
         super.setSize(w,h);
         width = w;

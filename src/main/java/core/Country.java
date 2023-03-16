@@ -46,11 +46,13 @@ public enum Country {
     }
 
     public String getCurrency(Integer amount) {
+        String output;
         if(isFloat) {
-            return String.format("%s %s",getAmountAsString(amount),abbr);
+            output = String.format("%s %s",getAmountAsString(amount),abbr);
         } else {
-            return String.format("%s %s",amount,abbr);
+            output = String.format("%s %s",amount,abbr);
         }
+        return (!output.isEmpty()) ? output : null;
     }
 
 }
