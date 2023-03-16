@@ -5,6 +5,7 @@ import core.Currency;
 import entity.*;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,7 +25,10 @@ public class FirmaDemoComponent extends JPanel implements ActionListener {
 
     public FirmaDemoComponent() {
 
-        GridLayout experimentLayout = new GridLayout(0,4);
+        GridBagLayout experimentLayout = new GridBagLayout();
+
+
+
         setLayout(experimentLayout);
 
         System.out.println("Komponente geladen.");
@@ -90,7 +94,23 @@ public class FirmaDemoComponent extends JPanel implements ActionListener {
 
     public void addElementsToCanvas () {
 
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.anchor = GridBagConstraints.NORTHWEST;
+        gbc.fill = 1;
+        gbc.ipadx = 200;
+        gbc.weightx = 0;
+        gbc.weighty = 0;
+
+        this.add(new JLabel("Vollständiger Name"),gbc);
+        this.add(new JLabel("Gehalt gesamt"),gbc);
+        this.add(new JLabel("Stundenlohn"),gbc);
+        this.add(new JLabel("Arbeitsstunden"),gbc);
+
+        int i = 1;
+
         while (this.employeeObjects.iterator().hasNext()) {
+            gbc.gridy = i;
+
             System.out.println("Start der Liste");
             AbstractMitarbeiter employee = this.employeeObjects.iterator().next();
 
@@ -99,6 +119,11 @@ public class FirmaDemoComponent extends JPanel implements ActionListener {
                 this.textFieldObjects.add(new JTextField(employee.getGehalt().toString()));
                 this.textFieldObjects.add(new JTextField(((Arbeiter) employee).getStundenlohn().toString()));
                 this.textFieldObjects.add(new JTextField(String.valueOf ( ((Arbeiter) employee).getStunden())));
+
+                this.add(new JTextField(employee.getFullName()),gbc);
+                this.add(new JTextField(employee.getGehalt().toString()),gbc);
+                this.add(new JTextField(((Arbeiter) employee).getStundenlohn().toString()),gbc);
+                this.add(new JTextField(String.valueOf ( ((Arbeiter) employee).getStunden())),gbc);
             }
 
             if(employee instanceof Angestellter) {
@@ -106,19 +131,13 @@ public class FirmaDemoComponent extends JPanel implements ActionListener {
                 this.textFieldObjects.add(new JTextField(employee.getGehalt().toString()));
                 this.textFieldObjects.add(new JTextField());
                 this.textFieldObjects.add(new JTextField());
+
+                this.add(new JTextField(employee.getFullName()),gbc);
+                this.add(new JTextField(employee.getGehalt().toString()),gbc);
             }
+            i++;
             this.employeeObjects.remove(employee);
         }
-
-        this.add(new JLabel("Vollständiger Name"));
-        this.add(new JLabel("Stundenlohn"));
-        this.add(new JLabel("Arbeitsstunden"));
-        this.add(new JLabel("Gehalt gesamt"));
-
-        for (JTextField textField : this.textFieldObjects) {
-            this.add(textField);
-        }
-
     }
 
     public void setSize(int w, int h) {
