@@ -36,7 +36,7 @@ public class FirmaDemoComponent extends JPanel implements ActionListener {
         // instanziiere Mitarbeiter-Objekte
         Angestellter olafOffice = new Angestellter("Olaf","Office",new Euro(375000));
         Arbeiter bauBernd = new Arbeiter("Bernd","Bau",new Euro(125000),new Euro(500));
-        Arbeiter travelTao = new Arbeiter("Tao","Travel",new Yen(10000),new Yen(5000));
+        Arbeiter travelTao = new Arbeiter("Tao","Travel",new Yen(10000),new Yen(1200));
         travelTao.addStunden(10);
 
         // füge Mitarbeiter der Objektliste hinzu (wichtig später für die UI)
@@ -114,6 +114,9 @@ public class FirmaDemoComponent extends JPanel implements ActionListener {
             System.out.println("Start der Liste");
             AbstractMitarbeiter employee = this.employeeObjects.iterator().next();
 
+            // TODO: doAction(){} in Enum implementieren, um Verzweigung zu vermeiden.
+            employee.doAction();
+
             if(employee instanceof Arbeiter) {
                 this.textFieldObjects.add(new JTextField(employee.getFullName()));
                 this.textFieldObjects.add(new JTextField(employee.getGehalt().toString()));
@@ -121,14 +124,14 @@ public class FirmaDemoComponent extends JPanel implements ActionListener {
                 this.textFieldObjects.add(new JTextField(String.valueOf ( ((Arbeiter) employee).getStunden())));
 
                 this.add(new JTextField(employee.getFullName()),gbc);
-                this.add(new JTextField(employee.getGehalt().toString()),gbc);
-                this.add(new JTextField(((Arbeiter) employee).getStundenlohn().toString()),gbc);
+                this.add(new JTextField(employee.getGehalt().changeMoneyTo(new Euro()).toString()),gbc);
+                this.add(new JTextField(((Arbeiter) employee).getStundenlohn().changeMoneyTo(new Euro()).toString()),gbc);
                 this.add(new JTextField(String.valueOf ( ((Arbeiter) employee).getStunden())),gbc);
             }
 
             if(employee instanceof Angestellter) {
                 this.textFieldObjects.add( new JTextField(employee.getFullName()));
-                this.textFieldObjects.add(new JTextField(employee.getGehalt().toString()));
+                this.textFieldObjects.add(new JTextField(employee.getGehalt().changeMoneyTo(new Euro()).toString()));
                 this.textFieldObjects.add(new JTextField());
                 this.textFieldObjects.add(new JTextField());
 

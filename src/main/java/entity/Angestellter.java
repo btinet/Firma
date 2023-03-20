@@ -1,6 +1,7 @@
 package entity;
 
 import core.AbstractMitarbeiter;
+import core.EmployeeActionEnum;
 
 public class Angestellter extends AbstractMitarbeiter {
 
@@ -18,6 +19,7 @@ public class Angestellter extends AbstractMitarbeiter {
             )
     {
         super(vorname, name, gehalt);
+        this.action = EmployeeActionEnum.angestellter;
     }
 
     // Getter & Setter

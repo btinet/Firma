@@ -10,6 +10,8 @@ public abstract class AbstractMitarbeiter {
     protected String vorname;
     protected Money gehalt;
 
+    protected EmployeeActionEnum action;
+
     // Constructor
 
     public AbstractMitarbeiter
@@ -52,5 +54,9 @@ public abstract class AbstractMitarbeiter {
 
     public void setGehalt(Money gehalt) {
         this.gehalt = gehalt;
+    }
+
+    public void doAction() {
+        this.action.doAction();
     }
 }

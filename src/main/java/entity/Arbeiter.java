@@ -1,6 +1,7 @@
 package entity;
 
 import core.AbstractMitarbeiter;
+import core.EmployeeActionEnum;
 
 public class Arbeiter extends AbstractMitarbeiter {
 
@@ -21,6 +22,7 @@ public class Arbeiter extends AbstractMitarbeiter {
     {
         super(vorname, name, gehalt);
         this.stundenlohn = stundenlohn;
+        this.action = EmployeeActionEnum.arbeiter;
     }
 
     // Methods
