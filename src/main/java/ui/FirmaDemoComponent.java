@@ -1,15 +1,14 @@
 package ui;
 
 import core.AbstractMitarbeiter;
-import core.Currency;
 import entity.*;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.ListIterator;
 
 public class FirmaDemoComponent extends JPanel implements ActionListener {
 
@@ -108,38 +107,31 @@ public class FirmaDemoComponent extends JPanel implements ActionListener {
 
         int i = 1;
 
-        while (this.employeeObjects.iterator().hasNext()) {
+        for (AbstractMitarbeiter employeeObject : this.employeeObjects) {
+
             gbc.gridy = i;
 
-            System.out.println("Start der Liste");
-            AbstractMitarbeiter employee = this.employeeObjects.iterator().next();
+            switch (employeeObject.getClass().getSimpleName()) {
 
-            // TODO: doAction(){} in Enum implementieren, um Verzweigung zu vermeiden.
-            employee.doAction();
+                case "Arbeiter":
+                    Arbeiter arbeiter = (Arbeiter) employeeObject;
+                    this.add(new JLabel(arbeiter.getFullName()), gbc);
+                    this.add(new JLabel(arbeiter.getGehalt().changeMoneyTo(new Euro()).getCurrency()), gbc);
+                    this.add(new JLabel(arbeiter.getStundenlohn().changeMoneyTo(new Euro()).getCurrency()), gbc);
+                    this.add(new JLabel(String.valueOf(arbeiter.getStunden())), gbc);
+                    break;
 
-            if(employee instanceof Arbeiter) {
-                this.textFieldObjects.add(new JTextField(employee.getFullName()));
-                this.textFieldObjects.add(new JTextField(employee.getGehalt().toString()));
-                this.textFieldObjects.add(new JTextField(((Arbeiter) employee).getStundenlohn().toString()));
-                this.textFieldObjects.add(new JTextField(String.valueOf ( ((Arbeiter) employee).getStunden())));
+                case "Angestellter":
+                    Angestellter angestellter = (Angestellter) employeeObject;
+                    this.add(new JLabel(angestellter.getFullName()), gbc);
+                    this.add(new JLabel(angestellter.getGehalt().getCurrency()), gbc);
+                    break;
 
-                this.add(new JTextField(employee.getFullName()),gbc);
-                this.add(new JTextField(employee.getGehalt().changeMoneyTo(new Euro()).toString()),gbc);
-                this.add(new JTextField(((Arbeiter) employee).getStundenlohn().changeMoneyTo(new Euro()).toString()),gbc);
-                this.add(new JTextField(String.valueOf ( ((Arbeiter) employee).getStunden())),gbc);
-            }
+                default:
+                    System.out.println("Erbt von AbstractMitarbeiter, wurde jedoch noch nicht implementiert.");
 
-            if(employee instanceof Angestellter) {
-                this.textFieldObjects.add( new JTextField(employee.getFullName()));
-                this.textFieldObjects.add(new JTextField(employee.getGehalt().changeMoneyTo(new Euro()).toString()));
-                this.textFieldObjects.add(new JTextField());
-                this.textFieldObjects.add(new JTextField());
-
-                this.add(new JTextField(employee.getFullName()),gbc);
-                this.add(new JTextField(employee.getGehalt().toString()),gbc);
             }
             i++;
-            this.employeeObjects.remove(employee);
         }
     }
 

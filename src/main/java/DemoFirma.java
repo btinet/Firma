@@ -9,6 +9,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
 
 public class DemoFirma {
 
@@ -52,8 +53,7 @@ public class DemoFirma {
         frame.addWindowListener( new WindowAdapter() { public void windowClosing(WindowEvent evt) {
             System.exit(0);
         } });
-
-        frame.addKeyListener( new KeyAdapter() { public void keyPressed(KeyEvent evt) {
+        frame.addKeyListener(new KeyAdapter() { public void keyPressed(KeyEvent evt) {
             if (evt.getKeyCode()==KeyEvent.VK_ESCAPE) System.exit(0);
             else if (evt.getKeyCode()==KeyEvent.VK_F1) {
                 destroyWindow();
@@ -62,6 +62,7 @@ public class DemoFirma {
                 showWindow();
             }
         } });
+
     }
 
     public void destroyWindow() {
@@ -92,13 +93,19 @@ public class DemoFirma {
             frame.setSize(width,height +insets.top);
 
         }
-        frame.setCursor(Cursor.getDefaultCursor());
+        frame.setCursor(invisibleCursor());
         frame.setVisible(true);
         frame.repaint();
     }
 
     public CardLayout getCardLayout() {
         return cardLayout;
+    }
+
+    public static Cursor invisibleCursor() {
+        return Toolkit.getDefaultToolkit().createCustomCursor(
+                new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB),
+                new Point(0, 0), "invisible_cursor");
     }
 
     // main class
