@@ -27,7 +27,7 @@ public abstract class Money extends Currency {
         return this.country.getCurrencyRate();
     }
 
-    public <T extends Money>  Money changeMoneyTo(Money newCurrency) {
+    public Money changeMoneyTo(Money newCurrency) {
         double result = this.getRate() * this.getAmount() / newCurrency.getRate();
         newCurrency.setAmount(Math.toIntExact(Math.round(result)));
         return newCurrency;
